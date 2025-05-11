@@ -31,10 +31,10 @@ class CreditCardNumber
             }
         }
 
-        throw new \RuntimeException('Valid credit card not found.');
+        throw new \RuntimeException('Cartão de crédito válido não encontrado.');
     }
 
-    private static function passesLuhn(string $number): bool
+    public static function passesLuhn(string $number): bool
     {
         $sum = 0;
         $alt = false;

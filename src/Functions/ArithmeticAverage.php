@@ -2,9 +2,12 @@
 declare(strict_types=1);
 
 namespace Caique\PhpCodingChallenges\Functions;
+
+use InvalidArgumentException;
+
 /**
- * The function should recive an array with at least 3 itens and return the arithmetic average of all the itens.
- * If the recived array contains less then 3 itens, the function should return the boolean false.
+ * The function should receive an array with at least 3 itens and return the arithmetic average of all the itens.
+ * If the received array contains less then 3 itens, the function should return the boolean false.
  * Ex: input: [4,6,8] 	- output 6
  * Ex: input: [1,2] 	- output false
  *
@@ -16,16 +19,25 @@ namespace Caique\PhpCodingChallenges\Functions;
  * @param array $notas
  * @return int|bool
  */
-
 class ArithmeticAverage
 {
     public static function calculate(array $integers): int|false
     {
-        if (count($integers) < 3 || !array_reduce($integers, fn($carry, $item) => $carry && is_int($item), true)) {
-            echo "Erro: O array deve ter pelo menos 3 itens e todos os itens devem ser inteiros.\n";
+        try {
+            if (count($integers) < 3) {
+                throw new InvalidArgumentException('Array deve ter pelo menos 3 itens.');
+            }
+
+            foreach ($integers as $item) {
+                if (!is_int($item)) {
+                    throw new InvalidArgumentException('Todos os itens do array devem ser inteiros.');
+                }
+            }
+
+            $avg = array_sum($integers) / count($integers);
+            return (int) round($avg);
+        } catch (InvalidArgumentException $e) {
             return false;
         }
-
-        return (int) round(array_sum($integers) / count($integers));
     }
 }

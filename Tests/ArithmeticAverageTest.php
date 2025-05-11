@@ -16,18 +16,17 @@ class ArithmeticAverageTest extends TestCase
     public function testValidArrays(array $input, int $expected): void
     {
         $result = ArithmeticAverage::calculate($input);
-        fwrite(STDOUT, "Testando array válido " . json_encode($input) . ": retornou {$result}, esperado {$expected}\n");
         $this->assertEquals($expected, $result);
     }
 
     public static function validArraysProvider(): array
     {
         return [
-            [[4, 6, 8], 6],
-            [[1, 2, 3], 2],
-            [[10, 20, 30, 40], 25],
-            [[5, 5, 5], 5],
-            [[3, 4, 5, 6], 5],
+            'Input [4, 6, 8] -> Expected 6' => [[4, 6, 8], 6],
+            'Input [1, 2, 3] -> Expected 2' => [[1, 2, 3], 2],
+            'Input [10, 20, 30, 40] -> Expected 25' => [[10, 20, 30, 40], 25],
+            'Input [5, 5, 5] -> Expected 5' => [[5, 5, 5], 5],
+            'Input [3, 4, 5, 6] -> Expected 5' => [[3, 4, 5, 6], 5],
         ];
     }
 
@@ -38,21 +37,20 @@ class ArithmeticAverageTest extends TestCase
     public function testInvalidArrays(array $input): void
     {
         $result = ArithmeticAverage::calculate($input);
-        fwrite(STDOUT, "Testando array inválido " . json_encode($input) . ": retornou " . var_export($result, true) . " (esperado false)\n");
         $this->assertFalse($result);
     }
 
     public static function invalidArraysProvider(): array
     {
         return [
-            [[1]],
-            [[2, 3]],
-            [[],],
-            [["1", 2, 3]],
-            [[1, 2, 3.5]],
-            [[1, 2, "3"]],
-            [[null]],
-            [["not an array"]],
+            'Input [1] -> Expected false' => [[1]],
+            'Input [2, 3] -> Expected false' => [[2, 3]],
+            'Input [] -> Expected false' => [[],],
+            'Input ["1", 2, 3] -> Expected false' => [["1", 2, 3]],
+            'Input [1, 2, 3.5] -> Expected false' => [[1, 2, 3.5]],
+            'Input [1, 2, "3"] -> Expected false' => [[1, 2, "3"]],
+            'Input [null] -> Expected false' => [[null]],
+            'Input ["not an array"] -> Expected false' => [["not an array"]],
         ];
     }
 
@@ -63,9 +61,6 @@ class ArithmeticAverageTest extends TestCase
     {
         $validResult = ArithmeticAverage::calculate([3, 3, 3]);
         $invalidResult = ArithmeticAverage::calculate([1, 2]);
-
-        fwrite(STDOUT, "Tipo do retorno (válido): " . gettype($validResult) . "\n");
-        fwrite(STDOUT, "Tipo do retorno (inválido): " . gettype($invalidResult) . "\n");
 
         $this->assertIsInt($validResult);
         $this->assertIsBool($invalidResult);

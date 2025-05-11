@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Caique\PhpCodingChallenges\Functions;
 
+use InvalidArgumentException;
+
 /**
  * The function must replace all the vowels with '?' and return the result string
  * Ex: input: 'Foo' - output: 'F??'
@@ -15,11 +17,14 @@ namespace Caique\PhpCodingChallenges\Functions;
  */
 class ReplaceVowels
 {
-    public static function replace($string): ?string
+    public static function replace(string $string): string
     {
-        if (!is_string($string) || $string === '') {
-            echo "Erro: O parâmetro fornecido não é uma string válida.\n";
-            return null;
+        if ($string === '') {
+            throw new InvalidArgumentException('A string não pode estar vazia.');
+        }
+
+        if (!preg_match('/^[\p{L}\s]+$/u', $string)) {
+            throw new InvalidArgumentException('A string deve conter apenas letras e espaços (sem números ou símbolos).');
         }
 
         return preg_replace('/[aeiouáéíóúãõâêîôûàèìòùäëïöü]/iu', '?', $string);
