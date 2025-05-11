@@ -22,5 +22,8 @@
             "email": "dev.caique.ortega@outlook.com"
         }
     ],
+    "scripts": {
+        "test": "vendor/bin/phpunit --testdox"
+    },
     "require": {}
 }
